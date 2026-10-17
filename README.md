@@ -78,3 +78,11 @@ Configurația urmează [documentația oficială Pages](https://developers.cloudf
 ## Licență
 
 MIT. Numele APCGG și al școlii sunt folosite doar pentru demonstrație; verificați dreptul de utilizare înaintea unei lansări oficiale.
+
+## Calendar, sarcini și discuții
+
+În Ședințe este disponibil calendarul lunar, navigarea între luni, filtrarea pe o zi și exportul `.ics` pentru import în Apple Calendar, Google Calendar sau Outlook. Importul este o acțiune a utilizatorului; aplicația nu sincronizează automat calendarul și nu solicită acces la contul de calendar. Evenimentele demonstrative sunt pe 28 octombrie și 12 noiembrie 2026, ore Europe/Bucharest, exportate în UTC.
+
+În Proiecte, „Susține ideea” adaugă o singură susținere locală și permite retragerea ei. Deschide „Etape, sarcini și comentarii” pentru planul proiectului. Poți adăuga sarcini într-o etapă, cu responsabil fictiv și termen, bifa finalizarea lor și șterge cu confirmare. Progresul sarcinilor este calculat din sarcinile bifate, separat de progresul general al proiectului. Comentariile sunt text simplu, limitate la 1.000 de caractere, cu nume fictiv din Profil și data adăugării.
+
+Nu există autentificare: aceste funcții sunt demonstrative și modificabile local de oricine folosește browserul. Noile câmpuri sunt adăugate automat datelor existente, fără resetarea voturilor sau a propunerilor. Calendarul și datele locale funcționează și offline după actualizarea PWA.

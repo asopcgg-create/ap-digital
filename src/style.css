@@ -4,3 +4,5 @@
 @media(max-width:850px){.sidebar{visibility:hidden}.sidebar.open{visibility:visible}}
 
 .brand{gap:12px;margin-bottom:38px}.brand .association-logo{width:45px;height:45px}.brand>span{font-size:17px;white-space:nowrap}
+
+.brand{padding:14px 10px;background:#f7f8f4;border:1px solid #e5e9df;border-radius:12px;gap:10px;margin-bottom:30px}.brand .association-logo{width:40px;height:40px}.brand .association-name{white-space:normal;font-size:11px;letter-spacing:-.15px;line-height:1.45}.association-name small{display:block;font-size:10px;letter-spacing:0;font-weight:400;color:#7d897d;margin-top:4px}@media(max-width:1150px) and (min-width:851px){.brand{padding:12px 8px;gap:7px}.brand .association-logo{width:34px;height:34px}.brand .association-name{font-size:10px}.association-name small{font-size:9px}}

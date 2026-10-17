@@ -96,3 +96,13 @@ Beneficiarii se aleg dintre Grădiniță, Școală primară, Gimnaziu, Liceu; gr
 „Comunitatea în cifre” filtrează după nivel beneficiar, categorie, tip și stadiu. Ciornele sunt excluse implicit și pot fi incluse explicit. Graficul arată numărul de proiecte, susțineri sau înscrieri ca voluntar, grupate după categorie, nivel beneficiar, tip ori stadiu. Valorile sunt disponibile și într-un tabel accesibil. Tabelul proiectelor include și bugetul cunoscut; bugetele neestimate nu sunt considerate zero.
 
 Numerele reprezintă proiecte și interacțiuni demo, nu membri unici. Un proiect cu mai multe niveluri beneficiare apare în fiecare grup aferent, deci barele acelei grupări nu se însumează pentru un total unic. Nivelul beneficiar nu reprezintă nivelul persoanei care susține proiectul. Nu se calculează rate de participare fără numărul real al membrilor eligibili și nu se atribuie voturi din consultări proiectelor fără o legătură explicită. Proiectele vechi păstrează interacțiunile; doar cele trei proiecte inițiale primesc metadate demo, iar propunerile vechi fără clasificări rămân „Necompletat”.
+
+## Crearea consultărilor
+
+Butonul „Creează o consultare” permite titlu, explicație, 2–20 opțiuni diferite, selecție unică sau multiplă, termen-limită (ora dispozitivului), proiect asociat opțional și niveluri beneficiare. Consultarea poate fi salvată ca ciornă sau deschisă pentru vot. Ciornele se editează; după deschidere întrebarea și opțiunile existente sunt fixe. Un termen viitor este obligatoriu la deschidere. Expirarea și închiderea manuală blochează modificarea răspunsului și păstrează rezultatele.
+
+La selecție multiplă, fiecare bifare aparține aceluiași răspuns local; procentele se raportează la numărul răspunsurilor, deci pot însuma peste 100%. La retragere se elimină toate selecțiile răspunsului. Consultările noi pornesc de la zero; cele două consultări inițiale păstrează totalurile fictive și voturile locale existente.
+
+Autorul poate permite propuneri de opțiuni. Acestea intră într-o listă de verificare demo, de unde se aprobă sau se resping; doar după aprobare devin votabile. Sunt disponibile filtre pentru consultări deschise, ciorne și închise.
+
+Numărul eligibililor și regula pentru membri noi sunt declarative, pentru simulare. Fără autentificare nu se verifică apartenența sau drepturile de vot. Administrarea este disponibilă tuturor local, iar voturile nu sunt centralizate între persoane. Asocierea unui proiect este salvată și afișată, dar nu introduce voturile în graficele de proiecte și nu transformă automat o consultare în proiect.

@@ -37,3 +37,9 @@ Build TypeScript/Vite/PWA trecut. Din cele 14 verificări desktop/mobil, 12 au t
 Formular în etape, selecții structurate pentru niveluri/grupe/clase, activitate, resurse, buget, perioadă, acorduri și stadiu; rezumat cu elementele de clarificat; ciorne automate și explicite; editare și migrare fără pierderea voturilor/înscrierilor.
 
 Grafice filtrabile cu tabele de valori, separarea proiectelor/susținerilor/înscrierilor, excluderea implicită a ciornelor, stări fără rezultate, avertizare pentru beneficiari multipli și lipsa numărului membrilor unici. Cele 14 verificări anterioare au trecut; după clarificarea etichetelor listelor de selectare, au trecut și cele 4 verificări noi (desktop/mobil) pentru creare/editare, ciorne, validare și agregări filtrate. Build TypeScript/Vite/PWA trecut.
+
+## Consultări configurabile — 18 octombrie 2026
+
+Build trecut; 22 teste desktop/mobil trecute. Sunt acoperite crearea unei consultări noi, opțiuni duplicate, ciornă și publicare, proiect asociat, selecție multiplă cu un singur răspuns, retragere, propunere/aprobare de opțiuni, închidere manuală și la termen, persistență și păstrarea voturilor din schema veche. Testele specifice au fost reluate după adăugarea actualizării automate a stării de expirare, fără reîncărcare.
+
+Eligibilitatea și regula pentru membri noi sunt declarative în demo; nu există autentificare sau autorizare reală. Controalele administrative sunt locale și disponibile tuturor. Voturile din consultări nu sunt adunate la statisticile proiectelor.

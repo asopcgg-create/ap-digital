@@ -25,11 +25,11 @@ Service worker-ul se generează doar la build. Instalarea necesită HTTPS sau lo
 - **Acasă:** dashboard, anunț și legături către module; cifrele sunt demo.
 - **Ședințe:** calendar de întâlniri, ordine de zi, confirmare/anulare participare.
 - **Proiecte:** propuneri cu validare, înscriere/retragere voluntar, progres. Coordonatorul și administratorul pot modifica progresul demo.
-- **Consultări:** alegere și schimbare opțiune, rezultate recalculabile; un răspuns local per consultare. Nu reprezintă voturi oficiale.
+- **Consultări:** alegere, schimbare și retragere opțiune, număr de voturi pe opțiune și total recalculat; un răspuns local per consultare. Nu reprezintă voturi oficiale.
 - **Documente:** căutare, filtrare, citire și descărcare modele TXT, disponibile offline.
 - **Profil:** nume fictiv, rol demo, preferință noutăți (nu trimite notificări), instalare și resetare confirmată.
 
-Persistența folosește `localStorage`, cheia `ap-digital:v1`; datele invalide revin la setul inițial. Nu există sincronizare între utilizatori sau dispozitive. Nu introduce date personale reale. Resetarea elimină propunerile și preferințele locale.
+Persistența folosește `localStorage`, cheia `ap-digital:v1`; datele invalide revin la setul inițial. Filele aceluiași browser se sincronizează automat. Nu există sincronizare între utilizatori sau dispozitive. Nu introduce date personale reale. Resetarea elimină propunerile și preferințele locale.
 
 ## Structură și etapa 2 / Supabase
 
@@ -73,7 +73,7 @@ git push -u origin main
 5. Publică. Cloudflare furnizează o adresă HTTPS `*.pages.dev`. Actualizările pe `main` declanșează build-uri noi.
 6. Deschide site-ul online, instalează aplicația din meniul browserului (Safari iOS: Partajează → Adaugă pe ecranul principal), apoi verifică offline după prima încărcare completă.
 
-Configurația urmează [documentația oficială Pages](https://developers.cloudflare.com/pages/configuration/build-configuration/) și [ghidul React](https://developers.cloudflare.com/pages/framework-guides/deploy-a-react-site/). Poți folosi planul gratuit în limitele sale curente. Prototipul nu necesită server sau bază de date. Nu a fost creat automat un repository sau un deployment.
+Configurația urmează [documentația oficială Pages](https://developers.cloudflare.com/pages/configuration/build-configuration/) și [ghidul React](https://developers.cloudflare.com/pages/framework-guides/deploy-a-react-site/). Poți folosi planul gratuit în limitele sale curente. Prototipul nu necesită server sau bază de date. Versiunea demo este publicată la https://ap-digital.pages.dev, din repository-ul https://github.com/asopcgg-create/ap-digital.
 
 ## Licență
 

@@ -12,3 +12,12 @@
 - `npm install` a raportat 0 vulnerabilități la instalare.
 
 Capturi desktop și mobil furnizate separat. Instalarea efectivă pe iPhone/Android și publicarea Cloudflare nu au fost efectuate. Autentificarea și RLS Supabase sunt rezervate etapei 2.
+
+## Corecții după prima publicare
+
+- Rezultate pe opțiuni afișate în voturi și procente, total anunțat accesibil.
+- Retragerea votului scade totalul; schimbarea opțiunii păstrează un singur vot.
+- Sincronizare între file prin evenimentul storage; eliminarea opțiunilor invalide la încărcare.
+- Meniu mobil ascuns și din navigarea cu tastatura; focus păstrat în dialogul documentului.
+- Sigla asociației adăugată ca fișier original, inclusă în cache-ul offline.
+- Build TypeScript/Vite trecut; 8 teste Playwright trecute pe desktop și mobil.

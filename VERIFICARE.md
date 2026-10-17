@@ -31,3 +31,9 @@ Proiectele au susținere locală unică, etape, sarcini cu responsabil fictiv ș
 Datele vechi sunt completate cu noile câmpuri la încărcare, păstrând propunerile, voturile și înscrierile. Totul rămâne local, fără notificări sau sincronizare între persoane.
 
 Build TypeScript/Vite/PWA trecut. Din cele 14 verificări desktop/mobil, 12 au trecut în prima rulare; după corectarea etichetei pentru Etapă, cele două teste de sarcini/comentarii au trecut la reluare. Sunt verificate descărcarea .ics și timpii UTC, navigarea lunilor, susținerea/retragerea, adăugarea/bifarea/ștergerea sarcinilor, comentariile, persistența după reîncărcare și migrarea formatului anterior.
+
+## Formular extins și Comunitatea în cifre — 18 octombrie 2026
+
+Formular în etape, selecții structurate pentru niveluri/grupe/clase, activitate, resurse, buget, perioadă, acorduri și stadiu; rezumat cu elementele de clarificat; ciorne automate și explicite; editare și migrare fără pierderea voturilor/înscrierilor.
+
+Grafice filtrabile cu tabele de valori, separarea proiectelor/susținerilor/înscrierilor, excluderea implicită a ciornelor, stări fără rezultate, avertizare pentru beneficiari multipli și lipsa numărului membrilor unici. Cele 14 verificări anterioare au trecut; după clarificarea etichetelor listelor de selectare, au trecut și cele 4 verificări noi (desktop/mobil) pentru creare/editare, ciorne, validare și agregări filtrate. Build TypeScript/Vite/PWA trecut.

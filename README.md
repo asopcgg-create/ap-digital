@@ -121,3 +121,7 @@ Etapa „Echipa” include numele coordonatorului și opțiunea „Coordonatorul
 `AppShell.tsx` definește meniul lateral, navigarea mobilă și antetul ambelor versiuni. `HomeIntro.tsx` definește prezentarea și indicatorii paginii Acasă. `Calendar.tsx` primește întâlnirile din Supabase în modul online și datele demonstrative în demo; include filtrare pe zi/lună și export iCalendar. Datele și drepturile de acces ale celor două moduri rămân separate.
 
 Întâlnirile online nu au încă un câmp de final: exportul estimează o durată de o oră, indicată în descrierea evenimentului.
+
+## Adeziune și reconfirmare
+
+Fluxul de cerere PDF semnată și trimisă manual, verificarea administratorului și reconfirmarea anuală sunt descrise în [ADEZIUNE.md](ADEZIUNE.md). Informarea despre date este o versiune de test, de validat înaintea înscrierilor generale.

@@ -1,0 +1,13 @@
+import fs from 'node:fs';import vm from 'node:vm';import ts from 'typescript';import assert from 'node:assert/strict';
+const source=fs.readFileSync(new URL('../supabase/functions/ap-membership-mail/index.ts',import.meta.url),'utf8').replace(/^import .*;\n/gm,'');
+const code=ts.transpile(source,{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.None});
+function worker({configured=true,jobs=[],claimError=false,sendError=false}={}){let handler;const calls=[],mail=[];const context={Request,Response,console,Deno:{env:{get:name=>name==='AP_SMTP_PASSWORD'?(configured?'TEST_ONLY':undefined):name==='SUPABASE_URL'?'https://example.test':'SERVER_ONLY'},serve:fn=>handler=fn},createClient:()=>({rpc:async(name,args)=>{calls.push({name,args});return name==='ap_claim_mail_jobs'?{data:jobs,error:claimError?{}:null}:{error:null}}}),nodemailer:{createTransport:()=>({sendMail:async payload=>{mail.push(payload);if(sendError)throw Error('SMTP refused');return{accepted:[payload.to]}},close(){}})}};vm.runInNewContext(code,context);return{handler,calls,mail}}
+const request=(headers={},body='{}')=>new Request('https://example.test',{method:'POST',headers,body});
+let w=worker();assert.equal((await w.handler(request())).status,401);assert.equal(w.calls.length,0);
+w=worker({configured:false});assert.equal((await w.handler(request({'x-ap-dispatch':'test'}))).status,503);assert.equal(w.calls.length,0);
+w=worker({claimError:true});assert.equal((await w.handler(request({'x-ap-dispatch':'wrong'}))).status,403);assert.equal(w.mail.length,0);
+const job={id:'test-job',claim_id:'lease',email:'admin@example.test',kind:'request',display_name:'Test\r\nBcc: bad@example.test',assigned_role:'membru'};
+w=worker({jobs:[job]});assert.equal((await w.handler(request({'x-ap-dispatch':'test'},JSON.stringify({email:'bad@example.test',subject:'Injected'})))).status,200);assert.equal(w.mail[0].to,'admin@example.test');assert.equal(w.mail[0].subject,'Cerere nouă de înscriere — AP Digital');assert.equal(w.mail[0].from,'APCGG Digital <asopcgg@gmail.com>');assert.equal(w.calls[1].args.delivered,true);assert.ok(!('html'in w.mail[0]));
+w=worker({jobs:[job],sendError:true});await w.handler(request({'x-ap-dispatch':'test'}));assert.equal(w.calls[1].args.delivered,false);
+for(const kind of ['active','rejected']){w=worker({jobs:[{...job,kind}]});await w.handler(request({'x-ap-dispatch':'test'}));assert.ok(w.mail[0].text.includes(kind==='active'?'Rol în platformă':'nu a fost aprobată'))}
+console.log('7 mail worker checks passed (SMTP simulated).');

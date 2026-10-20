@@ -125,3 +125,7 @@ Etapa „Echipa” include numele coordonatorului și opțiunea „Coordonatorul
 ## Adeziune și reconfirmare
 
 Fluxul de cerere PDF semnată și trimisă manual, verificarea administratorului și reconfirmarea anuală sunt descrise în [ADEZIUNE.md](ADEZIUNE.md). Informarea despre date este o versiune de test, de validat înaintea înscrierilor generale.
+
+## Fișiere în Documente
+
+Încărcarea privată a fișierelor de orice format (maximum 25 MB), drepturile și verificările sunt descrise în [DOCUMENTE.md](DOCUMENTE.md).

@@ -2,6 +2,10 @@
 
 Etapa 1: prototip PWA pentru asociații de părinți. Prima implementare demonstrativă este APCGG Digital, pentru comunitatea Colegiului German Goethe. Nu este un serviciu oficial al școlii sau al asociației. Toate documentele, cifrele, întâlnirile și proiectele sunt fictive.
 
+## Etapa 2 pregătită pentru conectare
+
+Pe lângă demonstrația locală, codul include un spațiu online separat (`/?mode=online`), cu Supabase Auth, cereri de înscriere, aprobare, roluri verificate prin RLS și date comune pentru cele șapte module. Activarea necesită un proiect Supabase; fără configurare nu se simulează autentificarea. Ghidul complet este în [ACTIVARE-SUPABASE.md](ACTIVARE-SUPABASE.md). Datele demo nu sunt importate.
+
 ## Pornire
 
 Node.js 22.12+ (recomandat Node 24 LTS), npm și un browser modern.
@@ -33,11 +37,9 @@ Persistența folosește `localStorage`, cheia `ap-digital:v1`; datele invalide r
 
 ## Structură și etapa 2 / Supabase
 
-`src/data.ts`: tipuri și date demonstrative; `src/storage.ts`: încărcare și limita adaptorului de autentificare; `src/main.tsx`: cele șase module; `src/style.css`: design responsive și Tailwind; `vite.config.ts`: PWA/Workbox.
+`src/data.ts`: tipuri și date demonstrative; `src/storage.ts`: încărcare și limita adaptorului de autentificare; `src/main.tsx`: cele șapte module demo; `src/style.css`: design responsive și Tailwind; `vite.config.ts`: PWA/Workbox.
 
-`AuthAdapter` definește sesiunea și deconectarea, `Role` definește membru/coordonator/administrator, iar `canCoordinate` controlează doar interfața. Nu există autentificare reală sau protecție de date prin aceste roluri. `.env.example` rezervă configurația publică pentru integrarea ulterioară, fără a inițializa un client Supabase.
-
-Pentru etapa 2: implementează adaptorul cu Supabase Auth; creează tabele pentru asociații, membri, ședințe, confirmări, proiecte, voluntari, consultări, opțiuni, voturi și documente; înlocuiește salvarea locală cu un repository asincron. Impune izolarea pe asociație și autorizarea cu RLS pe fiecare tabel și bucket. Rolul trebuie citit din apartenența verificată pe server, nu din câmpuri editabile în browser. Impune unicitate `(consultation_id, user_id)` și `(meeting_id, user_id)`. Nu publica niciodată cheia `service_role` în Vite. Planifică migrarea/resetarea datelor demo separat; nu le importa în producție.
+`AuthAdapter` rămâne limita compatibilă pentru demonstrația locală. Spațiul comun folosește `src/supabase.ts`, `src/AuthPortal.tsx`, `src/OnlineApp.tsx` și `src/onlineRepository.ts`. Configurația publică este descrisă în `.env.example`. Rolurile demo nu sunt citite de spațiul comun. Tabelele, funcțiile tranzacționale și politicile RLS sunt în `supabase/migrations/202610200001_online.sql`.
 
 ## Testare
 
@@ -106,3 +108,9 @@ La selecție multiplă, fiecare bifare aparține aceluiași răspuns local; proc
 Autorul poate permite propuneri de opțiuni. Acestea intră într-o listă de verificare demo, de unde se aprobă sau se resping; doar după aprobare devin votabile. Sunt disponibile filtre pentru consultări deschise, ciorne și închise.
 
 Numărul eligibililor și regula pentru membri noi sunt declarative, pentru simulare. Fără autentificare nu se verifică apartenența sau drepturile de vot. Administrarea este disponibilă tuturor local, iar voturile nu sunt centralizate între persoane. Asocierea unui proiect este salvată și afișată, dar nu introduce voturile în graficele de proiecte și nu transformă automat o consultare în proiect.
+
+## Coordonator și contact din școală
+
+Etapa „Echipa” include numele coordonatorului și opțiunea „Coordonatorul este și persoana de contact din școală”. Dacă este bifată, rezumatul folosește automat coordonatorul; altfel apare un câmp separat. Contactul separat este păstrat când opțiunea este bifată, astfel încât să poată fi recuperat la debifare. Ambele câmpuri pot fi completate ulterior; descrierea veche a echipei nu este interpretată automat ca nume de coordonator. Datele și ciornele existente sunt normalizate fără resetare.
+
+În spațiul comun, ciornele nu se salvează automat în browser: folosește explicit „Salvează ca ciornă”. O salvare refuzată păstrează formularul deschis. Tokenul de sesiune este gestionat de clientul oficial Supabase; conținutul proiectelor nu este copiat în localStorage.

@@ -1,0 +1,2 @@
+import{defineConfig}from'@playwright/test';
+export default defineConfig({testDir:'./tests/online',use:{baseURL:'http://127.0.0.1:4174',headless:true,channel:'chrome',serviceWorkers:'block'},webServer:{command:'npm run dev -- --port 4174 --strictPort',env:{VITE_SUPABASE_URL:'https://ap-digital-test.supabase.co',VITE_SUPABASE_PUBLISHABLE_KEY:'sb_publishable_test_only'},url:'http://127.0.0.1:4174',reuseExistingServer:false},projects:[{name:'desktop',use:{viewport:{width:1440,height:1000}}},{name:'mobile',use:{viewport:{width:390,height:844},isMobile:true,hasTouch:true}}]});

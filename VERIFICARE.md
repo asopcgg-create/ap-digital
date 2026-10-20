@@ -43,3 +43,11 @@ Grafice filtrabile cu tabele de valori, separarea proiectelor/susținerilor/îns
 Build trecut; 22 teste desktop/mobil trecute. Sunt acoperite crearea unei consultări noi, opțiuni duplicate, ciornă și publicare, proiect asociat, selecție multiplă cu un singur răspuns, retragere, propunere/aprobare de opțiuni, închidere manuală și la termen, persistență și păstrarea voturilor din schema veche. Testele specifice au fost reluate după adăugarea actualizării automate a stării de expirare, fără reîncărcare.
 
 Eligibilitatea și regula pentru membri noi sunt declarative în demo; nu există autentificare sau autorizare reală. Controalele administrative sunt locale și disponibile tuturor. Voturile din consultări nu sunt adunate la statisticile proiectelor.
+
+## 20 octombrie 2026 — coordonator și pregătirea spațiului comun
+
+- Build de producție: trecut, cu manifest și precache PWA generate.
+- 26 verificări de browser pentru demonstrație, pe desktop și mobil: trecute. Include coordonator/contact comun, actualizarea numelui, reluarea proiectului, recuperarea contactului separat și compatibilitatea datelor existente.
+- 6 verificări de browser pentru autentificare, sesiune, deconectare, acces în așteptare și păstrarea formularului la refuzul salvării: trecute, cu API Supabase simulat, fără conturi reale.
+- 12 scenarii PostgreSQL/PGlite: trecute. Migrarea reală, roluri SQL anon/authenticated, politici RLS, izolare între asociații, interdicția auto-aprobării, proprietatea proiectelor, versiuni concurente, unicitate susțineri/voluntariat/voturi, eligibilitate la deschidere, schimbare/retragere răspuns, agregare fără expunerea voturilor individuale, selecție multiplă, moderare, închidere, aprobarea cererilor și drepturi de publicare.
+- Niciun proiect Supabase nu a fost creat/conectat; e-mailurile și funcționarea în două conturi reale nu au fost verificate. Activarea urmează ghidul ACTIVARE-SUPABASE.md.

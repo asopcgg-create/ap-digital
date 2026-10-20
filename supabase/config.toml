@@ -1,0 +1,3 @@
+[functions.ap-membership-mail]
+# Gateway JWT verification plus a private server-side scheduler dispatch key.
+verify_jwt = true

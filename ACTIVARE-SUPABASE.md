@@ -92,3 +92,17 @@ Testele PostgreSQL rulează migrarea și RLS în PGlite. Testele online de brows
 ## Verificare efectuată pe proiectul real
 
 API-ul Auth răspunde, furnizorul e-mail este activ, înscrierea este permisă și confirmarea adresei este obligatorie. Domeniul site-ului este `https://ap-digital.pages.dev`, cu cele două URL-uri exacte de revenire enumerate mai sus. Parola minimă configurată este de 12 caractere. Pagina publicată afișează formularul de autentificare. Citirile anonime ale proiectelor și membrilor, respectiv apelul anonim al snapshot-ului, au fost refuzate cu 401 / permission denied. Verificarea SQL raportează 11 tabele din 11 cu RLS activ. Nu s-au creat conturi de test și nu s-au trimis e-mailuri; confirmarea adresei, recuperarea și fluxul cu două conturi reale necesită verificare după înregistrarea primelor conturi. SMTP pentru invitații la scară nu este configurat.
+
+
+## Îmbunătățiri cont — 20 octombrie 2026
+
+- Confirmarea parolei la înregistrare și la schimbarea parolei.
+- Retrimiterea confirmării adresei; pauză de 60 de secunde în interfață între solicitări de e-mail. Limitele reale rămân cele aplicate de Supabase; pauza din browser nu este o protecție anti-abuz pe server.
+- Recuperare cu răspuns neutru, fără confirmarea existenței contului.
+- Mesaje pentru linkuri expirate și explicația deschiderii în același browser (PKCE).
+- Explicație despre cont, cererea de membru, datele utilizate și contactul asociației. Informarea completă privind protecția datelor rămâne de definitivat de asociație.
+- 14 verificări ale spațiului online cu API simulat, desktop și mobil, inclusiv confirmare parolă, retrimitere, recuperare, expirare și actualizarea parolei. Build verificat.
+
+SMTP personalizat este încă oprit; contul Resend conectat nu are domenii. Pentru activare este necesar un domeniu autorizat și verificarea DNS, apoi configurarea SMTP. Nu folosi domeniul școlii fără autorizare. Nu dezactiva confirmarea adresei ca soluție la lipsa SMTP. Șabloanele Supabase sunt blocate pentru editare până la configurarea SMTP personalizat.
+
+Primul administrator și testele cu e-mailuri reale necesită desemnarea persoanei și parcurgerea personală a confirmării/parolei. Nu au fost create conturi reale de test sau aprobări fictive.

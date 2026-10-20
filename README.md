@@ -137,3 +137,7 @@ Propuneri private, gestionarea discuțiilor, documente și indicatori agregați:
 ## Calendar și participanți
 
 Editare, anulare cu istoric, totaluri și liste nominale cu acces restricționat: [CALENDAR.md](CALENDAR.md).
+
+## Documente de lucru și AGA
+
+Editor colaborativ privat, salvare automată, repere în istoric și publicarea unei copii: [REDACTARE.md](REDACTARE.md). Documentele publicate au editare, înlocuirea fișierelor, istoric și coș, descrise în [DOCUMENTE.md](DOCUMENTE.md).

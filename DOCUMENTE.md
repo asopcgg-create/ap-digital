@@ -7,3 +7,11 @@ Fișierele se păstrează în bucketul privat `ap-documents`; nu se folosesc URL
 Instalare: aplicați migrarea `202610200004_document_files.sql` după migrările existente, apoi publicați interfața. Migrarea creează bucketul privat și regulile pentru acces. Nu modificați bucketul în public.
 
 Verificări: `node tests/document-files.mjs`; `npm run test:online -- --grep 'documente:'`; `npm run build`. Testele folosesc date fictive și servicii simulate pentru browser, respectiv PostgreSQL local pentru regulile de acces.
+
+## Actualizare, versiuni și coș
+
+Administratorii și coordonatorii pot edita titlul, categoria și textul/descrierea și pot înlocui un fișier. Fiecare modificare păstrează versiunea anterioară. Istoricul și fișierele versiunilor vechi sunt vizibile numai echipei de coordonare/administrare. Membrii descarcă doar versiunea curentă a documentelor publicate.
+
+„Mută în coș” ascunde documentul și fișierul de membri și permite restaurarea. „Restabilește versiunea” creează o nouă revizie, fără pierderea istoricului. Modificările concurente se resping dacă versiunea deschisă a devenit veche.
+
+Numai administratorii pot șterge definitiv un document deja aflat în coș, după confirmare în interfață. Procesul elimină fișierele curente și istorice prin API-ul Storage, apoi elimină documentul și versiunile din bază. Dacă eliminarea se întrerupe, documentul rămâne în coș cu opțiune de reîncercare și nu poate fi restaurat parțial. Operația se finalizează doar după ce fișierele nu mai există în Storage. Testele nu execută ștergeri reale în proiectul publicat.

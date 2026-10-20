@@ -21,3 +21,5 @@
 .document-file-name{overflow-wrap:anywhere}.form input[type=file]{max-width:100%;min-width:0}
 
 .sponsorships{display:grid;gap:1.2rem}.sponsorship-detail,.sponsorship-file{overflow-wrap:anywhere}.sponsorship-detail .form{padding:0}.sidebar nav .nav{white-space:normal;text-align:left}.sidebar nav{overflow-y:auto;min-height:0}.sponsorship-detail input[type=file]{max-width:100%;min-width:0}
+
+.meeting-board{border:0;padding:0;margin:0;min-width:0;display:grid;gap:1.2rem}.meeting-board .card{min-width:0;overflow-wrap:anywhere}.meeting-board .toolbar{flex-wrap:wrap}

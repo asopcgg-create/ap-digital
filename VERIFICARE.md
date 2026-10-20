@@ -63,3 +63,12 @@ Eligibilitatea și regula pentru membri noi sunt declarative în demo; nu exist�
 - Primul cont, desemnarea administratorului și e-mailurile nu au fost testate cu persoane reale. Serviciul SMTP propriu nu este încă configurat.
 
 După activare, build-ul local cu configurația reală a trecut, iar cele 26 de verificări desktop/mobil au trecut din nou. Testele demonstrației folosesc explicit `?mode=demo`, independent de intrarea implicită online.
+
+
+## Interfață comună — 20 octombrie 2026
+
+Demo și spațiul autentificat folosesc aceleași componente AppShell, HomeIntro și Calendar: meniu lateral pe desktop, meniu pliabil pe telefon, prezentare Acasă și carduri cu cifre. Spațiul online folosește exclusiv datele Supabase; secțiunile goale au mesaje explicite. Întâlnirile comune sunt afișate în calendar și în carduri cu data, ordinea de zi și confirmarea participării. Formularul de programare este pliabil și disponibil doar coordonatorilor/administratorilor.
+
+Exportul .ics folosește începutul real; în lipsa unei ore de final, se estimează o oră, menționat în descrierea exportului. Identificatorii evenimentelor demo existente sunt păstrați.
+
+Verificări: build de producție reușit; 26 teste demo și 16 teste online cu API simulat, desktop și mobil. Testul nou verifică data întâlnirii online, filtrarea lunară, absența datelor demo, exportul iCalendar și închiderea meniului mobil după navigare.

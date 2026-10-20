@@ -114,3 +114,10 @@ Numărul eligibililor și regula pentru membri noi sunt declarative, pentru simu
 Etapa „Echipa” include numele coordonatorului și opțiunea „Coordonatorul este și persoana de contact din școală”. Dacă este bifată, rezumatul folosește automat coordonatorul; altfel apare un câmp separat. Contactul separat este păstrat când opțiunea este bifată, astfel încât să poată fi recuperat la debifare. Ambele câmpuri pot fi completate ulterior; descrierea veche a echipei nu este interpretată automat ca nume de coordonator. Datele și ciornele existente sunt normalizate fără resetare.
 
 În spațiul comun, ciornele nu se salvează automat în browser: folosește explicit „Salvează ca ciornă”. O salvare refuzată păstrează formularul deschis. Tokenul de sesiune este gestionat de clientul oficial Supabase; conținutul proiectelor nu este copiat în localStorage.
+
+
+## Aspect comun pentru demo și online
+
+`AppShell.tsx` definește meniul lateral, navigarea mobilă și antetul ambelor versiuni. `HomeIntro.tsx` definește prezentarea și indicatorii paginii Acasă. `Calendar.tsx` primește întâlnirile din Supabase în modul online și datele demonstrative în demo; include filtrare pe zi/lună și export iCalendar. Datele și drepturile de acces ale celor două moduri rămân separate.
+
+Întâlnirile online nu au încă un câmp de final: exportul estimează o durată de o oră, indicată în descrierea evenimentului.

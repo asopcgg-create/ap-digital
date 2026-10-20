@@ -51,3 +51,15 @@ Eligibilitatea și regula pentru membri noi sunt declarative în demo; nu exist�
 - 6 verificări de browser pentru autentificare, sesiune, deconectare, acces în așteptare și păstrarea formularului la refuzul salvării: trecute, cu API Supabase simulat, fără conturi reale.
 - 14 scenarii PostgreSQL/PGlite: trecute. Migrarea reală, roluri SQL anon/authenticated, politici RLS, izolare între asociații, interdicția auto-aprobării, proprietatea proiectelor, versiuni concurente, unicitate susțineri/voluntariat/voturi, eligibilitate la deschidere, schimbare/retragere răspuns, agregare fără expunerea voturilor individuale, selecție multiplă, moderare, închidere, aprobarea cererilor și drepturi de publicare. Include date de proiect malformate și termenul-limită verificat pe server.
 - Niciun proiect Supabase nu a fost creat/conectat; e-mailurile și funcționarea în două conturi reale nu au fost verificate. Activarea urmează ghidul ACTIVARE-SUPABASE.md.
+
+## 20 octombrie 2026 — activare în Supabase și Cloudflare
+
+- Proiect Supabase real: `prgtvtuwsmhpsmbkkgmp`, UE Irlanda, Healthy.
+- Migrare inițială executată cu aprobare explicită, prin SQL Editor. Nu s-au importat date demo.
+- Interogare în baza reală: 11 tabele și 11 tabele cu RLS activ.
+- Auth: e-mail activ, înscriere permisă, confirmare obligatorie, parolă minimă de 12 caractere; domeniul și cele două URL-uri de confirmare/recuperare salvate.
+- API public: acces anonim la ap_projects, ap_memberships și ap_snapshot refuzat cu HTTP 401 / 42501. Auth settings: HTTP 200.
+- Configurație publică salvată în Cloudflare; rebuild publicat cu succes. Formularul real de autentificare este vizibil la rădăcina site-ului.
+- Primul cont, desemnarea administratorului și e-mailurile nu au fost testate cu persoane reale. Serviciul SMTP propriu nu este încă configurat.
+
+După activare, build-ul local cu configurația reală a trecut, iar cele 26 de verificări desktop/mobil au trecut din nou. Testele demonstrației folosesc explicit `?mode=demo`, independent de intrarea implicită online.

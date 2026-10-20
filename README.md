@@ -2,9 +2,9 @@
 
 Etapa 1: prototip PWA pentru asociații de părinți. Prima implementare demonstrativă este APCGG Digital, pentru comunitatea Colegiului German Goethe. Nu este un serviciu oficial al școlii sau al asociației. Toate documentele, cifrele, întâlnirile și proiectele sunt fictive.
 
-## Etapa 2 pregătită pentru conectare
+## Etapa 2 conectată la Supabase
 
-Pe lângă demonstrația locală, codul include un spațiu online separat (`/?mode=online`), cu Supabase Auth, cereri de înscriere, aprobare, roluri verificate prin RLS și date comune pentru cele șapte module. Activarea necesită un proiect Supabase; fără configurare nu se simulează autentificarea. Ghidul complet este în [ACTIVARE-SUPABASE.md](ACTIVARE-SUPABASE.md). Datele demo nu sunt importate.
+Pe lângă demonstrația locală, codul include un spațiu online separat (`/?mode=online`), cu Supabase Auth, cereri de înscriere, aprobare, roluri verificate prin RLS și date comune pentru cele șapte module. Instanța publică este conectată la proiectul Supabase al asociației; autentificarea se deschide implicit. Demonstrația rămâne la `/?mode=demo`. Într-o instalare fără configurare nu se simulează autentificarea. Ghidul complet este în [ACTIVARE-SUPABASE.md](ACTIVARE-SUPABASE.md). Datele demo nu sunt importate.
 
 ## Pornire
 
@@ -48,7 +48,7 @@ npx playwright install chromium
 npm test
 ```
 
-Pentru Chrome deja instalat poți folosi `PW_CHANNEL=chrome npm test`. Rezultatele verificării sunt în `VERIFICARE.md`.
+Pentru Chrome deja instalat poți folosi `PW_CHANNEL=chrome npm test`. Testele demonstrației cer explicit `?mode=demo`, astfel încât să funcționeze și după activarea autentificării implicite. Rezultatele verificării sunt în `VERIFICARE.md`.
 
 Testele pornesc preview-ul de producție (execută mai întâi build-ul). Acoperă desktop și mobil, confirmare și persistență, creare proiect, voluntariat, schimbare vot fără dublarea totalului, documente și descărcare, rol/progres, resetare, lipsa depășirii orizontale, recuperarea datelor corupte și navigare/reîncărcare offline.
 

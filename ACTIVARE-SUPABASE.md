@@ -1,6 +1,6 @@
 # Activarea spațiului comun APCGG Digital
 
-Codul este implementat și testabil local. Niciun proiect Supabase nu a fost conectat și nicio migrare nu a fost executată într-un cont online. Nu importa datele demo în spațiul comun.
+Activat la 20 octombrie 2026: proiectul Supabase `prgtvtuwsmhpsmbkkgmp`, regiunea UE Irlanda. Migrarea inițială a fost executată cu acordul titularului, prin SQL Editor; cele 11 tabele au RLS activ. Configurația publică este salvată în Cloudflare Pages, iar adresa implicită deschide autentificarea. Demonstrația separată rămâne la `/?mode=demo`. Nu au fost importate datele demo. Primul cont al asociației și aprobarea sa nu au fost încă efectuate. Pașii de mai jos rămân ghid de instalare; nu reaplica migrarea pe proiectul deja configurat.
 
 ## 1. Cont și proiect
 
@@ -38,7 +38,7 @@ Nu folosi `service_role`, `sb_secret_...`, parola bazei de date sau tokenuri adm
 
 ## 5. Primul administrator
 
-Înregistrează un cont în spațiul online, confirmă adresa și trimite cererea cu referința documentului semnat. Contul nu primește automat calitatea de membru. Primul administrator trebuie desemnat în baza de date de titularul proiectului, după verificarea cererii și aprobării Consiliului Director.
+Contul de administrare Supabase este separat de contul de membru din aplicație. Persoana desemnată înregistrează un cont în spațiul online cu propria adresă, confirmă adresa și trimite cererea cu referința documentului semnat. Contul nu primește automat calitatea de membru. Primul administrator trebuie desemnat în baza de date de titularul proiectului, după verificarea cererii și aprobării Consiliului Director.
 
 În SQL Editor, înlocuiește referințele din exemplu cu documentele reale înainte de executare; exemplul nu trebuie rulat cu textele de înlocuit:
 
@@ -49,14 +49,14 @@ set status = 'active', role = 'administrator', approved_at = now(),
 where association_id = '8e1f2fc1-2775-49cd-91b1-c06630eec432'
   and user_id = (
     select id from auth.users
-    where email = 'asopcgg@gmail.com' and email_confirmed_at is not null
+    where email = 'INLOCUIESTE-CU-EMAILUL-PERSOANEI-DESEMNATE' and email_confirmed_at is not null
   )
   and status = 'pending'
   and length(trim(application_reference)) > 0
 returning user_id, display_name, status, role;
 ```
 
-Verifică întoarcerea exact a rândului intenționat. Nu a fost executată această operație. Administratorii următori înregistrează aprobările din Profil, cu referința deciziei. Rolul de administrator este un drept operațional în aplicație, nu dovada unui mandat de președinte sau membru al Consiliului Director.
+Verifică întoarcerea exact a rândului intenționat. Operația de desemnare a primului administrator nu a fost executată. Administratorii următori înregistrează aprobările din Profil, cu referința deciziei. Rolul de administrator este un drept operațional în aplicație, nu dovada unui mandat de președinte sau membru al Consiliului Director.
 
 ## 6. Drepturi și date comune
 
@@ -88,3 +88,7 @@ npm run test:online
 ```
 
 Testele PostgreSQL rulează migrarea și RLS în PGlite. Testele online de browser folosesc exclusiv un serviciu simulat la `ap-digital-test.supabase.co`; nu contactează un cont Supabase real și nu trimit mesaje. După conectare, verifică separat cu două conturi de test în proiectul real: confirmarea adresei, înscrierea, aprobarea, partajarea unui proiect, voturile, deconectarea și refuzul accesului neautorizat. Ștergerea datelor de test dintr-un cont online se face numai cu autorizare explicită.
+
+## Verificare efectuată pe proiectul real
+
+API-ul Auth răspunde, furnizorul e-mail este activ, înscrierea este permisă și confirmarea adresei este obligatorie. Domeniul site-ului este `https://ap-digital.pages.dev`, cu cele două URL-uri exacte de revenire enumerate mai sus. Parola minimă configurată este de 12 caractere. Pagina publicată afișează formularul de autentificare. Citirile anonime ale proiectelor și membrilor, respectiv apelul anonim al snapshot-ului, au fost refuzate cu 401 / permission denied. Verificarea SQL raportează 11 tabele din 11 cu RLS activ. Nu s-au creat conturi de test și nu s-au trimis e-mailuri; confirmarea adresei, recuperarea și fluxul cu două conturi reale necesită verificare după înregistrarea primelor conturi. SMTP pentru invitații la scară nu este configurat.

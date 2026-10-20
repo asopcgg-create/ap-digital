@@ -133,3 +133,7 @@ Fluxul de cerere PDF semnată și trimisă manual, verificarea administratorului
 ## Sponsorizări și parteneriate
 
 Propuneri private, gestionarea discuțiilor, documente și indicatori agregați: [SPONSORIZARI.md](SPONSORIZARI.md).
+
+## Calendar și participanți
+
+Editare, anulare cu istoric, totaluri și liste nominale cu acces restricționat: [CALENDAR.md](CALENDAR.md).

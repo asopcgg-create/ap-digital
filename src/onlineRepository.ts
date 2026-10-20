@@ -2,7 +2,7 @@ import {associationId,supabase} from './supabase';
 import {initial,type State,type Project,type Role} from './data';
 import {normalizePlan} from './projectModel';
 import type {Consultation} from './consultationModel';
-export type Membership={association_id:string;user_id:string;display_name:string;status:'pending'|'active'|'rejected';role:Role;requested_at:string;approved_at:string|null;application_reference:string;resolution_reference:string};
+export type Membership={association_id:string;user_id:string;display_name:string;status:'pending'|'active'|'rejected'|'inactive';role:Role;requested_at:string;approved_at:string|null;application_reference:string;resolution_reference:string};
 export type CloudProject={id:string;owner_id:string;revision:number;payload:Project;supporters:number;volunteers:number;comments:(NonNullable<Project['comments']>[number]&{userId:string})[]};
 export type CloudPoll={id:string;revision:number;payload:Consultation;counts:number[];responses:number;eligible:number;can_vote:boolean};
 export type Snapshot={projects:CloudProject[];interactions:{project_id:string;kind:'support'|'volunteer'}[];consultations:CloudPoll[];ballots:{consultation_id:string;choices:number[]}[];suggestions:{id:string;consultation_id:string;label:string;status:string}[];meetings:{id:string;title:string;starts_at:string;place:string;agenda:string[]}[];attendance:string[];documents:{id:string;title:string;category:string;body:string;created_at:string}[]};

@@ -23,3 +23,5 @@
 .sponsorships{display:grid;gap:1.2rem}.sponsorship-detail,.sponsorship-file{overflow-wrap:anywhere}.sponsorship-detail .form{padding:0}.sidebar nav .nav{white-space:normal;text-align:left}.sidebar nav{overflow-y:auto;min-height:0}.sponsorship-detail input[type=file]{max-width:100%;min-width:0}
 
 .meeting-board{border:0;padding:0;margin:0;min-width:0;display:grid;gap:1.2rem}.meeting-board .card{min-width:0;overflow-wrap:anywhere}.meeting-board .toolbar{flex-wrap:wrap}
+
+.drafts{display:grid;gap:1.2rem}.draft-editor{padding:12px;min-width:0;overflow:hidden}.draft-editor .cm-editor{max-width:100%}.draft-editor .cm-scroller{max-height:65vh}.drafts .toolbar{flex-wrap:wrap}.drafts .toolbar button{white-space:normal}

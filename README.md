@@ -129,3 +129,7 @@ Fluxul de cerere PDF semnată și trimisă manual, verificarea administratorului
 ## Fișiere în Documente
 
 Încărcarea privată a fișierelor de orice format (maximum 25 MB), drepturile și verificările sunt descrise în [DOCUMENTE.md](DOCUMENTE.md).
+
+## Sponsorizări și parteneriate
+
+Propuneri private, gestionarea discuțiilor, documente și indicatori agregați: [SPONSORIZARI.md](SPONSORIZARI.md).

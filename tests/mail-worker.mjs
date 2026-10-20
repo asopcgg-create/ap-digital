@@ -9,5 +9,5 @@ w=worker({claimError:true});assert.equal((await w.handler(request({'x-ap-dispatc
 const job={id:'test-job',claim_id:'lease',email:'admin@example.test',kind:'request',display_name:'Test\r\nBcc: bad@example.test',assigned_role:'membru'};
 w=worker({jobs:[job]});assert.equal((await w.handler(request({'x-ap-dispatch':'test'},JSON.stringify({email:'bad@example.test',subject:'Injected'})))).status,200);assert.equal(w.mail[0].to,'admin@example.test');assert.equal(w.mail[0].subject,'Cerere nouă de înscriere — AP Digital');assert.equal(w.mail[0].from,'APCGG Digital <asopcgg@gmail.com>');assert.equal(w.calls[1].args.delivered,true);assert.ok(!('html'in w.mail[0]));
 w=worker({jobs:[job],sendError:true});await w.handler(request({'x-ap-dispatch':'test'}));assert.equal(w.calls[1].args.delivered,false);
-for(const kind of ['active','rejected']){w=worker({jobs:[{...job,kind}]});await w.handler(request({'x-ap-dispatch':'test'}));assert.ok(w.mail[0].text.includes(kind==='active'?'Rol în platformă':'nu a fost aprobată'))}
-console.log('7 mail worker checks passed (SMTP simulated).');
+for(const kind of ['active','rejected','inactive','reconfirm-2026']){w=worker({jobs:[{...job,kind}]});await w.handler(request({'x-ap-dispatch':'test'}));assert.ok(w.mail[0].text.includes(kind==='active'?'Rol în platformă':kind==='inactive'?'închis':kind.startsWith('reconfirm-')?'2026-2027':'nu a fost aprobată'))}
+console.log('9 mail worker checks passed (SMTP simulated).');

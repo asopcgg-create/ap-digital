@@ -8,7 +8,7 @@ Salvarea automată păstrează starea curentă. Butonul „Păstrează versiunea
 
 Textul nesalvat rămâne doar în memoria sesiunii: nu există jurnal de text în localStorage. La erori, editorul indică modificările nesalvate, reîncearcă și permite descărcarea unei copii TXT. Părăsirea editorului cu modificări nesalvate cere confirmare. Închiderea browserului fără salvare poate pierde aceste modificări. Limite: 100.000 de caractere și 1 MB stare colaborativă; o copie publicată are limita de 50.000 de caractere a documentelor text.
 
-Ciornele și versiunile nu sunt expuse membrilor obișnuiți. Editorul se încarcă separat la deschiderea rubricii. Nu este activat în demonstrația locală: colaborarea între dispozitive necesită cont online și baza comună. Nu sunt afișate cursoare sau prezența nominală a celorlalți redactori.
+Ciornele și versiunile nu sunt expuse membrilor obișnuiți. Editorul se încarcă separat la deschiderea rubricii. În demonstrația locală editorul folosește stocare în browser și sincronizare periodică între file; colaborarea între dispozitive necesită cont online și baza comună. Nu sunt afișate cursoare sau prezența nominală a celorlalți redactori.
 
 Instalare: `202610210003_document_management.sql`, apoi `202610210004_collaborative_drafts.sql`. A doua migrare adaugă `ap_drafts` la publicația existentă `supabase_realtime`. Configurația a fost verificată în proiect. Tabelele nu acceptă scrieri directe din client; RPC verifică rolul și asociația.
 

@@ -141,3 +141,7 @@ Editare, anulare cu istoric, totaluri și liste nominale cu acces restricționat
 ## Documente de lucru și AGA
 
 Editor colaborativ privat, salvare automată, repere în istoric și publicarea unei copii: [REDACTARE.md](REDACTARE.md). Documentele publicate au editare, înlocuirea fișierelor, istoric și coș, descrise în [DOCUMENTE.md](DOCUMENTE.md).
+
+## Demonstrație extinsă
+
+La `/?mode=demo` sunt disponibile și sponsorizările, documentele cu istoric/coș și redactarea AGA cu publicarea copiei. În Profil se simulează rolurile. Toate datele și fișierele rămân în browser; autentificarea și mesajele reale sunt excluse. Detalii și limite în [DEMO.md](DEMO.md).

@@ -1,7 +1,6 @@
 import {Sponsorships,SponsorshipStats} from './Sponsorships';
 import {OnlineDocuments} from './OnlineDocuments';
 import {demoDocuments,resetDemoFeatures} from './demoBackend';
-const CollaborativeDrafts=lazy(()=>import('./CollaborativeDrafts').then(m=>({default:m.CollaborativeDrafts})));
 import {HomeIntro} from './HomeIntro';
 import {AppShell} from './AppShell';
 import React,{Suspense,lazy,useEffect,useState} from 'react';
@@ -10,6 +9,7 @@ import{BarChart3,Home,CalendarDays,FolderHeart,Vote,Files,UserRound,ArrowUpRight
 import{initial,meetings,polls,documents,type State}from'./data';
 import{load,STORAGE_KEY,canCoordinate}from'./storage';
 import './style.css';
+const CollaborativeDrafts=lazy(()=>import('./CollaborativeDrafts').then(m=>({default:m.CollaborativeDrafts})));
 const AuthPortal=lazy(()=>import('./AuthPortal').then(m=>({default:m.AuthPortal}))); 
 import {onlineDefault} from './appConfig';
 import {Consultations} from './Consultations';

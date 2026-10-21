@@ -1,0 +1,37 @@
+// Isolated browser-only transport for the shared feature components. Never calls Supabase.
+import {documents} from './data';
+const KEY='ap-digital:demo-features:v1';
+type Row=Record<string,any>;
+type Store={ap_documents:Row[];ap_document_versions:Row[];ap_drafts:Row[];ap_draft_versions:Row[];leads:Row[]};
+const now=()=>new Date().toISOString();
+function read():Store{const raw=localStorage.getItem(KEY);return raw?JSON.parse(raw):{ap_documents:documents.map(d=>({...d,revision:1,created_at:now()})),ap_document_versions:[],ap_drafts:[],ap_draft_versions:[],leads:[{id:'demo-partner',owner_id:'demo',organization:'Librăria Exemplu (fictivă)',sector:'Educație',support_types:['Produse'],summary:'Cărți pentru biblioteca școlii — oportunitate demonstrativă.',stage:'propus',revision:1,created_at:now(),files:[]}]}}
+function write(s:Store){localStorage.setItem(KEY,JSON.stringify(s));dispatchEvent(new Event('ap-demo-change'))}
+function version(s:Store,d:Row){s.ap_document_versions.push({document_id:d.id,revision:d.revision,snapshot:structuredClone(d),created_at:now()})}
+function fileDB():Promise<IDBDatabase>{return new Promise((resolve,reject)=>{const r=indexedDB.open('ap-digital-demo-files',1);r.onupgradeneeded=()=>r.result.createObjectStore('files');r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)})}
+async function fileOp(mode:IDBTransactionMode,key:string,value?:Blob){const db=await fileDB();try{return await new Promise<any>((resolve,reject)=>{const tx=db.transaction('files',mode),store=tx.objectStore('files');const r=value?store.put(value,key):mode==='readonly'?store.get(key):store.delete(key);let result:any;r.onsuccess=()=>result=r.result;tx.oncomplete=()=>resolve(result);tx.onerror=()=>reject(tx.error)})}finally{db.close()}}
+export async function resetDemoFeatures(){localStorage.removeItem(KEY);const db=await fileDB();await new Promise<void>((resolve,reject)=>{const tx=db.transaction('files','readwrite');tx.objectStore('files').clear();tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error)});db.close();dispatchEvent(new Event('ap-demo-change'))}
+export function demoDocuments(){return read().ap_documents.filter(d=>!d.deleted_at&&!d.purge_requested_at)}
+const result=(data:any=null)=>({data,error:null});
+export const demoBackend={
+ from(table:string){let filters:((r:Row)=>boolean)[]=[],single=false,ordering:string|undefined,ascending=true,inserted:Row|undefined;
+ const q:any={select(){return q},eq(k:string,v:any){filters.push(r=>r[k]===v||k==='association_id');return q},not(k:string,_op:string,_v:any){filters.push(r=>r[k]!=null);return q},order(k:string,o:any){ordering=k;ascending=o?.ascending!==false;return q},single(){single=true;return q},insert(p:Row){inserted=p;return q},then(resolve:any,reject:any){return Promise.resolve().then(()=>{const s=read();if(!(table in s))throw new Error('Colecție demo indisponibilă.');let rows=s[table as keyof Store];if(inserted){const d={...inserted,id:crypto.randomUUID(),revision:1,created_at:now()};rows.push(d);if(table==='ap_documents')version(s,d);write(s)}rows=rows.filter(r=>filters.every(f=>f(r)));if(ordering)rows.sort((a,b)=>String(a[ordering!]).localeCompare(String(b[ordering!]))*(ascending?1:-1));return result(single?rows[0]:rows)}).catch(e=>({data:null,error:e})).then(resolve,reject)}};return q},
+ async rpc(name:string,p:Row){try{const s=read();let data:any=null; const d=s.ap_documents.find(r=>r.id===p.i),draft=s.ap_drafts.find(r=>r.id===p.i),lead=s.leads.find(r=>r.id===p.i);
+ const current=(r:Row|undefined)=>{if(!r)throw new Error('Înregistrarea nu mai există.');if(r.revision!==p.v)throw new Error('Modificat între timp. Reîncarcă lista.');return r};
+ const stats=()=>({active:s.leads.filter(l=>l.stage!=='inchis').length,confirmed:s.leads.filter(l=>l.stage==='confirmat').length,confirmed_amount:s.leads.reduce((n,l)=>n+Number(l.confirmed_amount||0),0),received_amount:s.leads.reduce((n,l)=>n+Number(l.received_amount||0),0)});
+ if(name==='ap_sponsorship_list')return result({leads:s.leads,assignees:[{id:'demo',name:'Coordonator demo'}],stats:stats()});
+ if(name==='ap_sponsorship_stats')return result(stats());
+ if(name==='ap_propose_sponsorship')s.leads.unshift({...p.p,id:crypto.randomUUID(),owner_id:'demo',revision:1,stage:'propus',created_at:now(),files:[]});
+ else if(name==='ap_manage_sponsorship'){current(lead);if(Number(p.p.received_amount)>Number(p.p.confirmed_amount))throw new Error('Suma primită nu poate depăși suma confirmată.');Object.assign(lead!,p.p,{revision:lead!.revision+1})}
+ else if(name==='ap_attach_sponsorship_file'){if(!lead)throw new Error('Oportunitate inexistentă.');lead.files.push({id:crypto.randomUUID(),file_path:p.p,file_name:p.f})}
+ else if(name==='ap_update_document'||name==='ap_restore_document_version'){current(d);const patch=name==='ap_update_document'?p.p:s.ap_document_versions.find(v=>v.document_id===d!.id&&v.revision===p.version)?.snapshot;if(!patch)throw new Error('Versiune inexistentă.');Object.assign(d!,patch,{revision:d!.revision+1,updated_at:now()});version(s,d!)}
+ else if(name==='ap_trash_document'){current(d);d!.deleted_at=p.restore?null:now();d!.revision++;version(s,d!)}
+ else if(name==='ap_prepare_document_purge'){current(d);if(!d!.deleted_at)throw new Error('Mută întâi în coș.');d!.purge_requested_at=now();data=[...new Set([d!.file_path,...s.ap_document_versions.filter(v=>v.document_id===p.i).map(v=>v.snapshot.file_path)].filter(Boolean))]}
+ else if(name==='ap_finish_document_purge'){if(!d?.purge_requested_at)throw new Error('Ștergerea nu a fost pregătită.');s.ap_documents=s.ap_documents.filter(r=>r.id!==p.i);s.ap_document_versions=s.ap_document_versions.filter(r=>r.document_id!==p.i)}
+ else if(name==='ap_create_draft'){data={id:crypto.randomUUID(),title:p.t,meeting_id:p.m,state_b64:p.s,plain_text:p.p,revision:1,updated_at:now()};s.ap_drafts.push(data)}
+ else if(name==='ap_save_draft'){if(!draft)throw new Error('Ciornă inexistentă.');if(draft.revision!==p.v)return result({saved:false,draft});Object.assign(draft,{state_b64:p.s,plain_text:p.p,revision:draft.revision+1,updated_at:now()});data={saved:true,draft}}
+ else if(name==='ap_checkpoint_draft'||name==='ap_publish_draft'){current(draft);s.ap_draft_versions.push({...draft,id:crypto.randomUUID(),draft_id:p.i,created_at:now()});if(name==='ap_publish_draft'){if(draft!.published_revision===draft!.revision)throw new Error('Această versiune a fost deja publicată.');const doc={id:crypto.randomUUID(),title:draft!.title,body:draft!.plain_text,category:'Procese-verbale',revision:1,created_at:now()};s.ap_documents.push(doc);version(s,doc);draft!.published_revision=draft!.revision}}
+ else throw new Error('Operație demo indisponibilă.');write(s);return result(data)
+ }catch(error){return {data:null,error}}},
+ storage:{from(bucket:string){return {async upload(path:string,file:Blob){try{await fileOp('readwrite',bucket+'/'+path,file);return result({path})}catch(error){return {data:null,error}}},async download(path:string){try{const b=await fileOp('readonly',bucket+'/'+path);if(!b)throw new Error('Fișierul local nu mai există.');return result(b)}catch(error){return {data:null,error}}},async remove(paths:string[]){try{for(const p of paths)await fileOp('readwrite',bucket+'/'+p);return result()}catch(error){return {data:null,error}}}}}},
+ channel(_name:string){const channel={on(..._args:any[]){return channel},subscribe(cb:(s:string)=>void){cb('CLOSED');return channel}};return channel},async removeChannel(_c:any){}
+};

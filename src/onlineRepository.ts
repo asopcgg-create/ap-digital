@@ -1,3 +1,5 @@
+import {onlineDefault} from './appConfig';
+import {demoBackend} from './demoBackend';
 import {associationId,supabase} from './supabase';
 import {initial,type State,type Project,type Role} from './data';
 import {normalizePlan} from './projectModel';
@@ -8,7 +10,7 @@ export type CloudPoll={id:string;revision:number;payload:Consultation;counts:num
 export type CloudDocument={id:string;title:string;category:string;body:string;created_at:string;file_path?:string|null;file_name?:string|null;file_size?:number|null;mime_type?:string|null;revision?:number;deleted_at?:string|null;purge_requested_at?:string|null};
 export type Snapshot={projects:CloudProject[];interactions:{project_id:string;kind:'support'|'volunteer'}[];consultations:CloudPoll[];ballots:{consultation_id:string;choices:number[]}[];suggestions:{id:string;consultation_id:string;label:string;status:string}[];meetings:{id:string;title:string;starts_at:string;place:string;agenda:string[];revision?:number;cancelled?:boolean;cancellation_reason?:string;confirmed_count?:number}[];attendance:string[];documents:CloudDocument[]};
 export function asError(error:unknown):Error{return error instanceof Error?error:new Error(error&&typeof error==='object'&&'message'in error&&typeof error.message==='string'?error.message:'Operația nu a reușit. Reîncearcă.')}
-export function db(){if(!supabase)throw new Error('Conectarea Supabase nu este configurată.');return supabase}
+export function db(){if(new URLSearchParams(location.search).get('mode')==='demo'||!onlineDefault&&new URLSearchParams(location.search).get('mode')!=='online')return demoBackend as unknown as NonNullable<typeof supabase>;if(!supabase)throw new Error('Conectarea Supabase nu este configurată.');return supabase}
 export async function membership(userId:string){const{data,error}=await db().from('ap_memberships').select('*').eq('association_id',associationId).eq('user_id',userId).maybeSingle();if(error)throw asError(error);return data as Membership|null}
 export async function snapshot(){const{data,error}=await db().rpc('ap_snapshot',{a:associationId});if(error)throw asError(error);return data as Snapshot}
 export function toState(s:Snapshot,m:Membership):State{return {...structuredClone(initial),profile:{name:m.display_name,role:m.role,notifications:false},projects:s.projects.map(p=>({...p.payload,id:p.id,plan:normalizePlan(p.payload.plan),comments:p.comments,supporters:p.supporters,volunteers:p.volunteers})),consultations:s.consultations.map(c=>({...c.payload,id:c.id,counts:c.counts,eligibleCount:String(c.eligible)})),votes:Object.fromEntries(s.ballots.map(b=>[b.consultation_id,b.choices])),consultationSuggestions:{},supportedProjects:s.interactions.filter(i=>i.kind==='support').map(i=>i.project_id),volunteering:s.interactions.filter(i=>i.kind==='volunteer').map(i=>i.project_id),attendance:s.attendance}}

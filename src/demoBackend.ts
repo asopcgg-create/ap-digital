@@ -4,7 +4,7 @@ const KEY='ap-digital:demo-features:v1';
 type Row=Record<string,any>;
 type Store={ap_documents:Row[];ap_document_versions:Row[];ap_drafts:Row[];ap_draft_versions:Row[];leads:Row[]};
 const now=()=>new Date().toISOString();
-function read():Store{const raw=localStorage.getItem(KEY);return raw?JSON.parse(raw):{ap_documents:documents.map(d=>({...d,revision:1,created_at:now()})),ap_document_versions:[],ap_drafts:[],ap_draft_versions:[],leads:[{id:'demo-partner',owner_id:'demo',organization:'Librăria Exemplu (fictivă)',sector:'Educație',support_types:['Produse'],summary:'Cărți pentru biblioteca școlii — oportunitate demonstrativă.',stage:'propus',revision:1,created_at:now(),files:[]}]}}
+function read():Store{const raw=localStorage.getItem(KEY);return raw?JSON.parse(raw):{ap_documents:documents.map(d=>({...d,revision:1,created_at:now()})),ap_document_versions:documents.map(d=>({document_id:d.id,revision:1,snapshot:{...d,revision:1,created_at:now()},created_at:now()})),ap_drafts:[],ap_draft_versions:[],leads:[{id:'demo-partner',owner_id:'demo',organization:'Librăria Exemplu (fictivă)',sector:'Educație',support_types:['Produse'],summary:'Cărți pentru biblioteca școlii — oportunitate demonstrativă.',stage:'propus',revision:1,created_at:now(),files:[]}]}}
 function write(s:Store){localStorage.setItem(KEY,JSON.stringify(s));dispatchEvent(new Event('ap-demo-change'))}
 function version(s:Store,d:Row){s.ap_document_versions.push({document_id:d.id,revision:d.revision,snapshot:structuredClone(d),created_at:now()})}
 function fileDB():Promise<IDBDatabase>{return new Promise((resolve,reject)=>{const r=indexedDB.open('ap-digital-demo-files',1);r.onupgradeneeded=()=>r.result.createObjectStore('files');r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)})}

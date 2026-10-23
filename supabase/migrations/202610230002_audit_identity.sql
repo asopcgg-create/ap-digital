@@ -1,0 +1,8 @@
+begin;
+create or replace function public.ap_activity(a uuid,q text default '',module_filter text default '',action_filter text default '',since_at timestamptz default null,until_at timestamptz default null,before_at timestamptz default null,before_id uuid default null) returns jsonb language plpgsql stable security definer set search_path='' as $$declare full_access boolean:=public.ap_admin(a);r jsonb;begin
+ if not public.ap_operator(a) then raise exception 'Acces neautorizat';end if;
+ select coalesce(jsonb_agg(row_data order by created_at desc,id desc),'[]') into r from (select id,created_at,jsonb_build_object('id',id,'created_at',created_at,'actor',case when full_access then case when actor_role='tehnic' then coalesce((select email from auth.users where id=actor_id),actor_name) else actor_name end else actor_role end,'role',actor_role,'entity',entity,'entity_id',entity_id,'action',action,'label',case when full_access then label else '' end,'fields',fields,'changes',changes) row_data from public.ap_activity_log where association_id=a and (module_filter='' or entity=module_filter) and (action_filter='' or action=action_filter) and (since_at is null or created_at>=since_at) and (until_at is null or created_at<=until_at) and (before_at is null or (created_at,id)<(before_at,coalesce(before_id,'ffffffff-ffff-ffff-ffff-ffffffffffff'::uuid))) and (q='' or (case when full_access then actor_name||' '||coalesce(label,'') else actor_role end) ilike '%'||left(q,100)||'%') order by created_at desc,id desc limit 100) x;return r;end $$;
+
+create index ap_technical_errors_user_time on public.ap_technical_errors(user_id,created_at desc);
+create index ap_technical_errors_association_time on public.ap_technical_errors(association_id,created_at desc);
+commit;

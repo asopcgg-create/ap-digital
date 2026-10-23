@@ -145,3 +145,7 @@ Editor colaborativ privat, salvare automată, repere în istoric și publicarea 
 ## Demonstrație extinsă
 
 La `/?mode=demo` sunt disponibile și sponsorizările, documentele cu istoric/coș și redactarea AGA cu publicarea copiei. În Profil se simulează rolurile. Toate datele și fișierele rămân în browser; autentificarea și mesajele reale sunt excluse. Detalii și limite în [DEMO.md](DEMO.md).
+
+## Administrare tehnică și trasabilitate
+
+Panou separat pentru acces tehnic și administrator: diagnostic, stocare, monitorizarea e-mailurilor, erori mascate, mentenanță reversibilă, versiunea aplicației și jurnal automat al modificărilor. Conturile tehnice nu sunt membri ai asociației prin acest acces. Nu există parole în cod. Instalare, limite și verificări în [TEHNIC-JURNAL.md](TEHNIC-JURNAL.md).

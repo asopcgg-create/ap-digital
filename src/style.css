@@ -25,3 +25,5 @@
 .meeting-board{border:0;padding:0;margin:0;min-width:0;display:grid;gap:1.2rem}.meeting-board .card{min-width:0;overflow-wrap:anywhere}.meeting-board .toolbar{flex-wrap:wrap}
 
 .drafts{display:grid;gap:1.2rem}.draft-editor{padding:12px;min-width:0;overflow:hidden}.draft-editor .cm-editor{max-width:100%}.draft-editor .cm-scroller{max-height:65vh}.drafts .toolbar{flex-wrap:wrap}.drafts .toolbar button{white-space:normal}
+
+.install-app{display:flex;gap:16px;padding:22px;margin:20px 0;align-items:flex-start}.install-copy{min-width:0}.install-app h2{font-size:18px;margin:0 0 6px}.install-app p{font-size:13px;line-height:1.6;margin:0 0 14px}.install-instructions{margin-top:18px;max-width:650px}.install-instructions h3{font-size:15px}.install-instructions ol{padding-left:22px;font-size:13px;line-height:1.8;margin:10px 0 14px}.install-app>svg{flex-shrink:0;color:#214c3e}@media(max-width:600px){.install-app{padding:18px;gap:12px}.install-app .primary{width:100%;justify-content:center}}

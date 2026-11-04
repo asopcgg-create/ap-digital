@@ -149,3 +149,7 @@ La `/?mode=demo` sunt disponibile și sponsorizările, documentele cu istoric/co
 ## Administrare tehnică și trasabilitate
 
 Panou separat pentru acces tehnic și administrator: diagnostic, stocare, monitorizarea e-mailurilor, erori mascate, mentenanță reversibilă, versiunea aplicației și jurnal automat al modificărilor. Conturile tehnice nu sunt membri ai asociației prin acest acces. Nu există parole în cod. Instalare, limite și verificări în [TEHNIC-JURNAL.md](TEHNIC-JURNAL.md).
+
+### Instalare de pe pagina Acasă
+Butonul „Instalează AP Digital” este comun modurilor demo și online. Folosește invitația browserului când este disponibilă; altfel afișează instrucțiuni pentru Safari pe iPhone/iPad sau meniul browserului. Invitația se ascunde în modul standalone și după evenimentul de instalare. Detectarea unei instalări existente dintr-o filă obișnuită depinde de browser. Datele comunității necesită în continuare internet.
+Verificare: `PW_CHANNEL=chrome npx playwright test tests/install.spec.ts` (invitație simulată; instalarea efectivă se verifică pe dispozitiv).
